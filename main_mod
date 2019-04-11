@@ -1,0 +1,39 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX 100
+int main() {
+	double **a, rmax, rmin;
+	int  j, i, n, m;
+	printf("Uneti dimenzije matrice\n");
+	scanf("%d %d", &n, &m);
+	a = malloc(n * sizeof(int*));
+	printf("Uneti opseg elemenata matrice\n");
+	scanf("%lf %lf", &rmin, &rmax);
+	for (i = 0; i < n; i++) {
+		*(a + i) = malloc(m * sizeof(double));
+		for (j = 0; j < m; j++) {
+			*(*(a + i) + j) = (rand() / (double )RAND_MAX) * (rmax - rmin) + rmin;
+		}
+	}
+	double p[MAX];
+	for (i = 0; i < n; i++) {
+		p[i] = 0;
+		for (j = 0; j < n; j++) {
+			p[i] += *(*(a + i) + j);
+		}
+	}
+	printf("\n");
+	printf("Elementi matrice: \n");
+	for (i = 0; i < n; i++) {
+		for (j = 0; j < m; j++) {
+			if (p[i] > 0) printf("%.2f ", *(*(a + i) + j));
+		}
+		if (p[i] > 0) printf("\n");
+	}
+	for (i = 0; i < n; i++) {
+		free(*(a + i));
+	}
+	free(a);
+	getchar();
+	getchar();
+}
